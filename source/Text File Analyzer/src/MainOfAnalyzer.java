@@ -10,7 +10,7 @@ import javax.swing.JTabbedPane;
  
 public class MainOfAnalyzer extends JFrame
 {
-	private int APPLET_WIDTH = 700, APPLET_HEIGHT = 650;
+	private int APPLET_WIDTH = 600, APPLET_HEIGHT = 400;
 	
 	private JPanel wholePanel;
 	private JTabbedPane tabPane;
@@ -22,11 +22,10 @@ public class MainOfAnalyzer extends JFrame
 
   public MainOfAnalyzer()
    {
-	  wholePanel = new JPanel();
 	  
 	  filelist = new ArrayList();
 	  
-	  setTitle("Text File Analyzer"); //set the title in main page
+	  setTitle("CSE360 Spring 2017"); //set the title in main page
 	  JLabel label1 = new JLabel();
 	  label1.setText("Text Analyzer");
       JTabbedPane jtp = new JTabbedPane();
@@ -36,19 +35,20 @@ public class MainOfAnalyzer extends JFrame
       
       
       tabPane = new JTabbedPane();
-	  openfilepanel = new OpenFilePanel(filelist);
+	  openfilepanel = new OpenFilePanel();
 	  anaandreepanel = new AnaAndRepPanel();
 	  helpinfopane = new HelpInfoPanel();
     	 
       tabPane.addTab("Open File ", openfilepanel); // OpenFilePanel?
       tabPane.addTab("Analyzation Report", anaandreepanel);//AnaAndRepPanel?
 	  tabPane.addTab("Help", helpinfopane);//HelpInfoPanel?
-	  getContentPane().add(tabPane);
 	  
-	  wholePanel.setLayout(new BoxLayout(wholePanel, BoxLayout.Y_AXIS));
-	  add(jtp);
-	  add(tabPane);
-	  
+	 
+	  wholePanel = new JPanel(new BorderLayout());
+	  wholePanel.add(jtp, BorderLayout.PAGE_START);
+	  wholePanel.add(tabPane);
+	  getContentPane().add(wholePanel); //to make Panel visible
+
 	  setSize (APPLET_WIDTH, APPLET_HEIGHT); //set JFrame size
 	  
 	  
