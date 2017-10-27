@@ -8,6 +8,14 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class OpenFilePanel extends JPanel {
 	
@@ -17,11 +25,11 @@ public class OpenFilePanel extends JPanel {
 	   private JTextField filename;
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
-
+	   private FileAddressList fileaddresslist;
 	   public OpenFilePanel()
 	   {
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
-		  
+		   msg2 = new JLabel("Testing window");
 		   Analyze = new JButton("Analyze!");		  //create a 'Analyze' button and add listener on it
 		   Analyze.addActionListener(new ButtonListener());
 		   Browse = new JButton("Browse");            //create a 'Browse' button and add listener on it
@@ -33,7 +41,7 @@ public class OpenFilePanel extends JPanel {
 		   
 		   
 		   toolpanel = new JPanel();	
-		   toolpanel.setLayout(new GridLayout(4,1));
+		   toolpanel.setLayout(new GridLayout(5,1));
 		   
 		   subpanel = new JPanel();
 		   subpanel.setLayout(new GridLayout(1,2));
@@ -44,7 +52,7 @@ public class OpenFilePanel extends JPanel {
 		   toolpanel.add(subpanel);
 		   toolpanel.add(loadmorefile);
 		   toolpanel.add(Analyze);
-	   	   
+	   	   toolpanel.add(msg2);
 		   scroll = new JScrollPane(toolpanel);
 		   add(scroll);
 				 	   
@@ -53,15 +61,39 @@ public class OpenFilePanel extends JPanel {
 	   {
 		   public void actionPerformed(ActionEvent e)
 		     {
+			   
 			   if(e.getSource() == Browse)
 			   {
 				   JFileChooser fileChooser = new JFileChooser();
-			       fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			       fileChooser.setAcceptAllFileFilterUsed(false);
+		
+				   FileFilter filter = new FileNameExtensionFilter("Text/CSV file", "txt", "csv");//set the types of files
+				   fileChooser.addChoosableFileFilter(filter);				   
+				   
 			       int rVal = fileChooser.showOpenDialog(null);
 			        if (rVal == JFileChooser.APPROVE_OPTION) 
-			        	filename.setText(fileChooser.getSelectedFile().toString());		        						
-			   }   
+			        	filename.setText(fileChooser.getSelectedFile().toString());	
+			        msg2.setText(filename.getText());
+			        //Array a[] = "", "2";
+					//fileaddresslist = new FileAddressList(a);
+
+			       //we can get directory of selected file from user then open it by StreamReader.
+			        
+			     /*  File filen = new File(filename.getText());
+			        
+			       
+						InputStreamReader reader = new InputStreamReader(new FileInputStream(filen));
+						BufferedReader bufferedReader = new BufferedReader(reader);   
+						String lineTXT = null;
+						while ((lineTXT = bufferedReader.readLine()) != null) {   
+							msg2.setText(lineTXT.toString().trim());
+						}
+				*/	
+			        
+			   }  
+			   else if(e.getSource() == Analyze)
+			   {
+				   
+			   }
 		     }		
 	   }
 }
