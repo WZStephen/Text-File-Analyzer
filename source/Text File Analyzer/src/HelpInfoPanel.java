@@ -22,6 +22,7 @@ public class HelpInfoPanel extends JPanel{
 		add(scroll);
 		
 		
+		
 	}
 
 }

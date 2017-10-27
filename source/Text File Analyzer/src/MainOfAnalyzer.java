@@ -3,7 +3,11 @@
 import javax.swing.*;
 import java.util.*;
 import java.awt.BorderLayout;
-
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+ 
 public class MainOfAnalyzer extends JFrame
 {
 	private int APPLET_WIDTH = 700, APPLET_HEIGHT = 650;
@@ -13,12 +17,14 @@ public class MainOfAnalyzer extends JFrame
 	private OpenFilePanel openfilepanel;
 	private AnaAndRepPanel anaandreepanel;
 	private HelpInfoPanel helpinfopane;
- 
+	private ArrayList filelist;
  
 
   public MainOfAnalyzer()
    {
 	  wholePanel = new JPanel();
+	  
+	  filelist = new ArrayList();
 	  
 	  setTitle("Text File Analyzer"); //set the title in main page
 	  JLabel label1 = new JLabel();
@@ -30,7 +36,7 @@ public class MainOfAnalyzer extends JFrame
       
       
       tabPane = new JTabbedPane();
-	  openfilepanel = new OpenFilePanel();
+	  openfilepanel = new OpenFilePanel(filelist);
 	  anaandreepanel = new AnaAndRepPanel();
 	  helpinfopane = new HelpInfoPanel();
     	 
