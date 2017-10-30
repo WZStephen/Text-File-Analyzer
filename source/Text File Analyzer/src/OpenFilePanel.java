@@ -20,7 +20,7 @@ public class OpenFilePanel extends JPanel {
 	   private JTextField filename;
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
-	   private FileAddressList fileaddresslist;
+	   private Fileinfo fileaddresslist;
 	   public OpenFilePanel()
 	   {
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
@@ -54,11 +54,13 @@ public class OpenFilePanel extends JPanel {
 	   }   
 	   private class ButtonListener implements ActionListener
 	   {
+		   
 		   public void actionPerformed(ActionEvent e)
 		     {
 			   
-			   if(e.getSource() == Browse)
+			   if(e.getSource() == Browse)  //find the location of file, get address
 			   {
+				   String fileaddress;
 				   JFileChooser fileChooser = new JFileChooser();
 		
 				   FileFilter filter = new FileNameExtensionFilter("Text/CSV file", "txt", "csv");//set the types of files
@@ -67,13 +69,21 @@ public class OpenFilePanel extends JPanel {
 			       int rVal = fileChooser.showOpenDialog(null);
 			        if (rVal == JFileChooser.APPROVE_OPTION) 
 			        	filename.setText(fileChooser.getSelectedFile().toString());	
-			        msg2.setText(filename.getText());
 			        
-			        File file = new File(filename.getText()); //read the file by address
+			        fileaddress = filename.getText();
+			        msg2.setText(fileaddress);
+			        
+			      		        
+			   }  
+			   
+			   else if(e.getSource() == Analyze)  //analysis the file by address
+			   {
+				   File file = new File(filename.getText()); //read the file by address
 			        try {
 						BufferedReader br = new BufferedReader(new FileReader(file));
 						String st;
-						while((st = br.readLine()) != null)
+						
+						while((st = br.readLine()) != null)  //testing
 						{
 							msg2.setText(st);
 						}
@@ -85,27 +95,6 @@ public class OpenFilePanel extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-			        
-			        //Array a[] = "", "2";
-					//fileaddresslist = new FileAddressList(a);
-
-			       //we can get directory of selected file from user then open it by StreamReader.
-			        
-			     /*  File filen = new File(filename.getText());
-			        
-			       
-						InputStreamReader reader = new InputStreamReader(new FileInputStream(filen));
-						BufferedReader bufferedReader = new BufferedReader(reader);   
-						String lineTXT = null;
-						while ((lineTXT = bufferedReader.readLine()) != null) {   
-							msg2.setText(lineTXT.toString().trim());
-						}
-				*/	
-			        
-			   }  
-			   else if(e.getSource() == Analyze)
-			   {
-				   
 			   }
 		     }		
 	   }
