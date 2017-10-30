@@ -10,12 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class OpenFilePanel extends JPanel {
 	
@@ -73,6 +68,24 @@ public class OpenFilePanel extends JPanel {
 			        if (rVal == JFileChooser.APPROVE_OPTION) 
 			        	filename.setText(fileChooser.getSelectedFile().toString());	
 			        msg2.setText(filename.getText());
+			        
+			        File file = new File(filename.getText()); //read the file by address
+			        try {
+						BufferedReader br = new BufferedReader(new FileReader(file));
+						String st;
+						while((st = br.readLine()) != null)
+						{
+							msg2.setText(st);
+						}
+						
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        
 			        //Array a[] = "", "2";
 					//fileaddresslist = new FileAddressList(a);
 
