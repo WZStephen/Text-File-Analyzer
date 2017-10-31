@@ -57,7 +57,7 @@ public class OpenFilePanel extends JPanel {
 		   
 		   public void actionPerformed(ActionEvent e)
 		     {
-			   
+			   int linecounter = 0;
 			   if(e.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
@@ -85,8 +85,10 @@ public class OpenFilePanel extends JPanel {
 						
 						while((st = br.readLine()) != null)  //testing
 						{
-							msg2.setText(st);
+							linecounter++;		
 						}
+						msg2.setText(String.valueOf(linecounter));
+
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
