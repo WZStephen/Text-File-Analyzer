@@ -58,6 +58,8 @@ public class OpenFilePanel extends JPanel {
 		   public void actionPerformed(ActionEvent e)
 		     {
 			   int linecounter = 0;
+			   int blanklinecounter = 0;
+			   int spacecounter = 0;
 			   if(e.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
@@ -79,16 +81,42 @@ public class OpenFilePanel extends JPanel {
 			   else if(e.getSource() == Analyze)  //analysis the file by address
 			   {
 				   File file = new File(filename.getText()); //read the file by address
+				   Fileinfo fileinfo = new Fileinfo();
 			        try {
 						BufferedReader br = new BufferedReader(new FileReader(file));
-						String st;
+						BufferedReader br1 = new BufferedReader(new FileReader(file));
+						BufferedReader br2 = new BufferedReader(new FileReader(file));
+
+						String st,st1,st2;
 						
-						while((st = br.readLine()) != null)  //testing
+						while((st = br.readLine()) != null)  //count the number of lines
 						{
 							linecounter++;		
 						}
-						msg2.setText(String.valueOf(linecounter));
+						//msg2.setText(String.valueOf(linecounter));
+						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
+						
+						while((st1 = br1.readLine())!= null) //count the number of blank lines
+						{
+							if(st1 != null && st1.trim().equals( "" ))
+							{
+								blanklinecounter++;
+							}
+						}
+						//msg2.setText(String.valueOf(blanklinecounter));
+						fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
+						
+						while((st2 = br2.readLine()) != null) //count the number of space 
+						{
+							for(int i = 0; i < st2.length(); i++) 
+							{
+							     if(Character.isWhitespace(st2.charAt(i))) 
+							    	 spacecounter++;
+							}
 
+						}
+						//msg2.setText(String.valueOf(spacecounter));
+						fileinfo.setnumofblanklines(spacecounter); //store the number of space to fileinfo class
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block

@@ -15,7 +15,7 @@ public class Fileinfo {
 	private int averageWlength;
 	private char mostcommonword;
 	//private fileaddress fileaddress;
-	public Fileinfo(ArrayList fileaddresslist)
+	public Fileinfo()
 	{
 		fileaddress = "?";
 		numoflies = 0;
@@ -58,7 +58,10 @@ public class Fileinfo {
 	{
 		numoflies = linecounter;
 	}
-	
+	public void setnumofblanklines(int blanklinecounter)
+	{
+		numofblanklines = blanklinecounter;
+	}
 	
 	
 	
