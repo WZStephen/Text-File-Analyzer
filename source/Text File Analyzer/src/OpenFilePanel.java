@@ -19,7 +19,7 @@ public class OpenFilePanel extends JPanel {
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
 	   private Fileinfo fileinfo;
-	   public OpenFilePanel()
+	   public OpenFilePanel(ArrayList filelist)
 	   {
 		   this.filelist = filelist;
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
