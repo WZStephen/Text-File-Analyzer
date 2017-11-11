@@ -101,7 +101,7 @@ public class OpenFilePanel extends JPanel {
 						{
 							linecounter++;		
 						}
-						msg2.setText(String.valueOf(linecounter));
+						//msg2.setText(String.valueOf(linecounter));
 						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
 						
 						while((st1 = br1.readLine())!= null) //count the number of blank lines
@@ -146,11 +146,16 @@ public class OpenFilePanel extends JPanel {
 						averagewordlength = numofchar/ (spacecounter + 2); //calculate average word length
 						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
 						  
+						
+						
+						msg2.setText(String.valueOf(linecounter));
 						filelist.add(fileinfo);
 						anaandreppanel.addCheckBox(fileinfo);
 
-						//filelist.add(fileinfo);
 						
+						
+						
+
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block

@@ -10,23 +10,33 @@ public class HelpInfoPanel extends JPanel{
 	private JPanel upPane, lowPanel;
 	private JLabel msg, msg1;
 	private JScrollPane scroll;
-	
+	private JFrame frame;
 	public HelpInfoPanel()
 	{
-		msg = new JLabel("Help Information: ");
 		
-		upPane = new JPanel();
-		upPane.setLayout(new BoxLayout(upPane, BoxLayout.Y_AXIS));
-		upPane.add(msg);
+		JFrame frame = new JFrame();
+		frame.setLayout(new GridLayout());
+		JLabel label = new JLabel("<html>"
+				+"<p>Instructions are as follow:</p>"
+				+"<p>           </p>"
+				+ "<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>First lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+"<p>Second lineaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>"
+				+ "</html>");
+		frame.add(label);
+		frame.pack();
+		frame.setVisible(true);
 		
 		
 		
+		add(label);
 		
-		
-		
-		
-		scroll = new JScrollPane(upPane);
-		add(scroll);
 		
 		
 		
