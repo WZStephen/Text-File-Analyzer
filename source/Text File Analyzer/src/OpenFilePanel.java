@@ -146,7 +146,8 @@ public class OpenFilePanel extends JPanel {
 						averagewordlength = numofchar/ (spacecounter + 2); //calculate average word length
 						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
 						  
-						//AnaAndRepPanel.settext(fileinfo);
+						filelist.add(fileinfo);
+						anaandreppanel.addCheckBox(fileinfo);
 
 						//filelist.add(fileinfo);
 						

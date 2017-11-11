@@ -62,7 +62,6 @@ public class AnaAndRepPanel extends JPanel{
 		lowRightPanel.add(avewordlength1);
 		lowRightPanel.add(commonwords);
 		lowRightPanel.add(commonwords1);
-
 			
 		lowwholepanel = new JPanel();
 		lowwholepanel.setLayout(new BoxLayout(lowwholepanel, BoxLayout.X_AXIS));
