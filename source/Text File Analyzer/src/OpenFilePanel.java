@@ -19,9 +19,12 @@ public class OpenFilePanel extends JPanel {
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
 	   private Fileinfo fileinfo;
-	   public OpenFilePanel(ArrayList filelist)
+	   private AnaAndRepPanel anaandreppanel;
+	   
+	   public OpenFilePanel(ArrayList filelist, AnaAndRepPanel anaandreppanel)
 	   {
 		   this.filelist = filelist;
+		   this.anaandreppanel = anaandreppanel;
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
 		   msg2 = new JLabel("Testing window");
 		   Analyze = new JButton("Analyze!");		  //create a 'Analyze' button and add listener on it

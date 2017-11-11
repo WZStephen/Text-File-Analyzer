@@ -10,7 +10,7 @@ import javax.swing.JTabbedPane;
  
 public class MainOfAnalyzer extends JFrame
 {
-	private int APPLET_WIDTH = 600, APPLET_HEIGHT = 550;
+	private int APPLET_WIDTH = 800, APPLET_HEIGHT = 600;
 	
 	private JPanel wholePanel;
 	private JTabbedPane tabPane;
@@ -35,8 +35,8 @@ public class MainOfAnalyzer extends JFrame
       
       
       tabPane = new JTabbedPane();
-	  openfilepanel = new OpenFilePanel(filelist);
-	  anaandreepanel = new AnaAndRepPanel(filelist, openfilepanel);
+	  openfilepanel = new OpenFilePanel(filelist,anaandreepanel );
+	  anaandreepanel = new AnaAndRepPanel(filelist);
 	  helpinfopane = new HelpInfoPanel();
     	 
       tabPane.addTab("Open File ", openfilepanel); // OpenFilePanel?
