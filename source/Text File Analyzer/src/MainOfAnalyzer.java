@@ -36,7 +36,7 @@ public class MainOfAnalyzer extends JFrame
       
       tabPane = new JTabbedPane();
 	  openfilepanel = new OpenFilePanel(filelist);
-	  anaandreepanel = new AnaAndRepPanel(filelist, anaandreepanel);
+	  anaandreepanel = new AnaAndRepPanel(filelist, openfilepanel);
 	  helpinfopane = new HelpInfoPanel();
     	 
       tabPane.addTab("Open File ", openfilepanel); // OpenFilePanel?
