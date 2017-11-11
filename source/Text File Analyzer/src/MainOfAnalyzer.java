@@ -10,20 +10,20 @@ import javax.swing.JTabbedPane;
  
 public class MainOfAnalyzer extends JFrame
 {
-	private int APPLET_WIDTH = 350, APPLET_HEIGHT = 300;
+	private int APPLET_WIDTH = 600, APPLET_HEIGHT = 550;
 	
 	private JPanel wholePanel;
 	private JTabbedPane tabPane;
 	private OpenFilePanel openfilepanel;
 	private AnaAndRepPanel anaandreepanel;
 	private HelpInfoPanel helpinfopane;
-	//private ArrayList filelist;
+	private ArrayList filelist;
  
 
   public MainOfAnalyzer()
    {
 	  
-	 // filelist = new ArrayList();
+	 filelist = new ArrayList();
 	  
 	  setTitle("CSE360 Spring 2017"); //set the title in main page
 	  JLabel label1 = new JLabel();

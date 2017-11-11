@@ -11,7 +11,7 @@ public class Fileinfo {
 	private int numofblanklines;
 	private int numofspaces;
 	private int numofwords;
-	private int averageCperline;
+	private double averageCperline;
 	private int averageWlength;
 	private char mostcommonword;
 	//private fileaddress fileaddress;
@@ -24,9 +24,10 @@ public class Fileinfo {
 		numofwords = 0;
 		averageCperline = 0;
 		averageWlength = 0;
+		averageCperline = 0.0;
 		mostcommonword = '\0';		
 	}
-	public int getnumoflines()
+	public int getnumoflines()  //get the value from class
 	{
 		return numoflies;
 	}	
@@ -42,7 +43,7 @@ public class Fileinfo {
 	{
 		return numofwords;
 	}
-	public int getaverageCperline()
+	public double getaverageCperline()
 	{
 		return averageCperline;
 	}
@@ -54,7 +55,9 @@ public class Fileinfo {
 	{
 		return mostcommonword;
 	}
-	public void setnumoflies(int linecounter)
+	
+	
+	public void setnumoflies(int linecounter) //set the value of input to class
 	{
 		numoflies = linecounter;
 	}
@@ -62,7 +65,22 @@ public class Fileinfo {
 	{
 		numofblanklines = blanklinecounter;
 	}
+	public void setavecharperline(double numofcharperline)
+	{
+		averageCperline  =  numofcharperline;
+	}
 	
+	public String toString()
+	{
+        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+		String result;
+		result = "das" + numoflies ;
+		return result;
+		
+		
+	}
+	
+
 	
 	
 }
