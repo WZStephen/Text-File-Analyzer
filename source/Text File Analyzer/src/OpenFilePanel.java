@@ -87,7 +87,7 @@ public class OpenFilePanel extends JPanel {
 			   else if(e.getSource() == Analyze)  //analysis the file by address
 			   {
 				   File file = new File(filename.getText()); //read the file by address
-				   fileinfo = new Fileinfo();
+				   Fileinfo fileinfo = new Fileinfo();
 			        try {
 						BufferedReader br = new BufferedReader(new FileReader(file));
 						BufferedReader br1 = new BufferedReader(new FileReader(file));
@@ -148,7 +148,7 @@ public class OpenFilePanel extends JPanel {
 						  
 						
 						
-						msg2.setText(String.valueOf(linecounter));
+						msg2.setText(String.valueOf(linecounter));					
 						filelist.add(fileinfo);
 						anaandreppanel.addCheckBox(fileinfo);
 
