@@ -1,24 +1,21 @@
 //This class is to store all inputed address and information of file by user
 
-import java.util.ArrayList;
 import java.text.*;
 
 public class Fileinfo {
-	
-	private ArrayList fileaddresslist;
-	private String fileaddress;
-	private int numoflies;
+
+	private int numoflines;
 	private int numofblanklines;
 	private int numofspaces;
 	private int numofwords;
 	private double averageCperline;
 	private int averageWlength;
 	private char mostcommonword;
-	//private fileaddress fileaddress;
+
+	
 	public Fileinfo()
 	{
-		fileaddress = "?";
-		numoflies = 0;
+		numoflines = 2;
 		numofblanklines = 0;
 		numofspaces = 0;
 		numofwords = 0;
@@ -29,7 +26,7 @@ public class Fileinfo {
 	}
 	public int getnumoflines()  //get the value from class
 	{
-		return numoflies;
+		return numoflines;
 	}	
 	public int getnumofblanklines()
 	{
@@ -57,27 +54,27 @@ public class Fileinfo {
 	}
 	
 	
-	public void setnumoflies(int linecounter) //set the value of input to class
+	public int setnumoflies(int linecounter) //set the value of input to class
 	{
-		numoflies = linecounter;
+		numoflines = linecounter;
+		return numoflines;
 	}
 	public void setnumofblanklines(int blanklinecounter)
 	{
 		numofblanklines = blanklinecounter;
 	}
-	public void setavecharperline(double numofcharperline)
+	public void setavecharperline(double averageCperline)
 	{
-		averageCperline  =  numofcharperline;
+		this.averageCperline  =  averageCperline;
 	}
 	
 	public String toString()
 	{
-        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+        //NumberFormat fmt = NumberFormat.getCurrencyInstance();
 		String result;
-		result = "das" + numoflies ;
+		result = "num of lines: " + numoflines ;
 		return result;
-		
-		
+			
 	}
 	
 

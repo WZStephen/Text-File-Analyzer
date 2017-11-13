@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
@@ -13,15 +11,17 @@ import java.io.*;
 public class OpenFilePanel extends JPanel {
 	
 		private ArrayList filelist;
+		 private AnaAndRepPanel anaandreppanel;
 	   private JPanel toolpanel, subpanel, wholepanel;
 	   private JLabel msg1, msg2;
 	   private JTextField filename;
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
-	   private Fileinfo fileinfo;
-	   public OpenFilePanel(ArrayList filelist)
+	  	   
+	   public OpenFilePanel(ArrayList filelist, AnaAndRepPanel anapanel)
 	   {
 		   this.filelist = filelist;
+		   this.anaandreppanel = anapanel;
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
 		   msg2 = new JLabel("Testing window");
 		   Analyze = new JButton("Analyze!");		  //create a 'Analyze' button and add listener on it
@@ -57,6 +57,7 @@ public class OpenFilePanel extends JPanel {
 		   
 		   public void actionPerformed(ActionEvent e)
 		     {
+			   
 			   int linecounter = 0;
 			   int blanklinecounter = 0;
 			   int spacecounter = 0;
@@ -66,25 +67,20 @@ public class OpenFilePanel extends JPanel {
 			   if(e.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
-				   JFileChooser fileChooser = new JFileChooser();
-		
+				   JFileChooser fileChooser = new JFileChooser();		
 				   FileFilter filter = new FileNameExtensionFilter("Text/CSV file", "txt", "csv");//set the types of files
-				   fileChooser.addChoosableFileFilter(filter);				   
-				   
+				   fileChooser.addChoosableFileFilter(filter);				   				   
 			       int rVal = fileChooser.showOpenDialog(null);
 			        if (rVal == JFileChooser.APPROVE_OPTION) 
 			        	filename.setText(fileChooser.getSelectedFile().toString());	
 			        
 			        fileaddress = filename.getText();
-			        msg2.setText(fileaddress);
-			        
-			      		        
-			   }  
-			   
+			        msg2.setText(fileaddress);			        			      		        
+			   }  			   
 			   else if(e.getSource() == Analyze)  //analysis the file by address
 			   {
 				   File file = new File(filename.getText()); //read the file by address
-				   fileinfo = new Fileinfo();
+				   Fileinfo fileinfo = new Fileinfo();
 			        try {
 						BufferedReader br = new BufferedReader(new FileReader(file));
 						BufferedReader br1 = new BufferedReader(new FileReader(file));
@@ -98,8 +94,8 @@ public class OpenFilePanel extends JPanel {
 						{
 							linecounter++;		
 						}
-						msg2.setText(String.valueOf(linecounter));
-						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
+						//msg2.setText(String.valueOf(linecounter));
+						
 						
 						while((st1 = br1.readLine())!= null) //count the number of blank lines
 						{
@@ -118,7 +114,6 @@ public class OpenFilePanel extends JPanel {
 							     if(Character.isWhitespace(st2.charAt(i))) 
 							    	 spacecounter++;
 							}
-
 						}
 						//msg2.setText(String.valueOf(spacecounter));
 						fileinfo.setnumofblanklines(spacecounter); //store the number of space to fileinfo class
@@ -142,11 +137,22 @@ public class OpenFilePanel extends JPanel {
 						
 						averagewordlength = numofchar/ (spacecounter + 2); //calculate average word length
 						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
-						  
-						//AnaAndRepPanel.settext(fileinfo);
-
-						//filelist.add(fileinfo);
 						
+						
+						  
+
+						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class	
+						int testvalue = fileinfo.getnumoflines();
+						msg2.setText(String.valueOf(testvalue));	
+						//msg2.setText(String.valueOf(linecounter));					
+						filelist.add(fileinfo);
+						
+						 AnaAndRepPanel anaandreppanel = new AnaAndRepPanel(filelist);
+						anaandreppanel.addCheckBox(testvalue);						
+						//msg2.setText("fileinfo added");
+										
+						msg2.setVisible(true);
+						filename.setText("  ");		
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
@@ -155,28 +161,16 @@ public class OpenFilePanel extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+			         catch(NumberFormatException ex)
+			        {
+			   		 msg2.setText("Invalid File Address!");
+			   		 msg2.setVisible(true);
+			   	  }
+			   }
+			   else if(e.getSource() == loadmorefile)
+			   {
+				   //the '...' button for handling more files
 			   }
 		     }		
 	   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

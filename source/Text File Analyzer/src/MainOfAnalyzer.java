@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.util.*;
 import java.awt.BorderLayout;
@@ -10,7 +8,7 @@ import javax.swing.JTabbedPane;
  
 public class MainOfAnalyzer extends JFrame
 {
-	private int APPLET_WIDTH = 600, APPLET_HEIGHT = 550;
+	private int APPLET_WIDTH = 800, APPLET_HEIGHT = 600;
 	
 	private JPanel wholePanel;
 	private JTabbedPane tabPane;
@@ -25,7 +23,7 @@ public class MainOfAnalyzer extends JFrame
 	  
 	 filelist = new ArrayList();
 	  
-	  setTitle("CSE360 Spring 2017"); //set the title in main page
+	  setTitle("CSE360 Fall 2017"); //set the title in main page
 	  JLabel label1 = new JLabel();
 	  label1.setText("Text Analyzer");
       JTabbedPane jtp = new JTabbedPane();
@@ -35,8 +33,8 @@ public class MainOfAnalyzer extends JFrame
       
       
       tabPane = new JTabbedPane();
-	  openfilepanel = new OpenFilePanel(filelist);
-	  anaandreepanel = new AnaAndRepPanel(filelist, openfilepanel);
+	  openfilepanel = new OpenFilePanel(filelist,anaandreepanel);
+	  anaandreepanel = new AnaAndRepPanel(filelist);
 	  helpinfopane = new HelpInfoPanel();
     	 
       tabPane.addTab("Open File ", openfilepanel); // OpenFilePanel?
@@ -62,4 +60,3 @@ public class MainOfAnalyzer extends JFrame
        
   }
 }
-
