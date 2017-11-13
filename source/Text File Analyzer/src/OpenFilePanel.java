@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
@@ -60,6 +58,8 @@ public class OpenFilePanel extends JPanel {
 		   
 		   public void actionPerformed(ActionEvent e)
 		     {
+			   anaandreppanel = new AnaAndRepPanel(filelist);
+			   
 			   int linecounter = 0;
 			   int blanklinecounter = 0;
 			   int spacecounter = 0;
@@ -69,21 +69,16 @@ public class OpenFilePanel extends JPanel {
 			   if(e.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
-				   JFileChooser fileChooser = new JFileChooser();
-		
+				   JFileChooser fileChooser = new JFileChooser();		
 				   FileFilter filter = new FileNameExtensionFilter("Text/CSV file", "txt", "csv");//set the types of files
-				   fileChooser.addChoosableFileFilter(filter);				   
-				   
+				   fileChooser.addChoosableFileFilter(filter);				   				   
 			       int rVal = fileChooser.showOpenDialog(null);
 			        if (rVal == JFileChooser.APPROVE_OPTION) 
 			        	filename.setText(fileChooser.getSelectedFile().toString());	
 			        
 			        fileaddress = filename.getText();
-			        msg2.setText(fileaddress);
-			        
-			      		        
-			   }  
-			   
+			        msg2.setText(fileaddress);			        			      		        
+			   }  			   
 			   else if(e.getSource() == Analyze)  //analysis the file by address
 			   {
 				   File file = new File(filename.getText()); //read the file by address
@@ -121,7 +116,6 @@ public class OpenFilePanel extends JPanel {
 							     if(Character.isWhitespace(st2.charAt(i))) 
 							    	 spacecounter++;
 							}
-
 						}
 						//msg2.setText(String.valueOf(spacecounter));
 						fileinfo.setnumofblanklines(spacecounter); //store the number of space to fileinfo class
@@ -145,17 +139,18 @@ public class OpenFilePanel extends JPanel {
 						
 						averagewordlength = numofchar/ (spacecounter + 2); //calculate average word length
 						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
-						  
-						
-						
+						  					
 						msg2.setText(String.valueOf(linecounter));					
 						filelist.add(fileinfo);
-						anaandreppanel.addCheckBox(fileinfo);
-
+						
+						 anaandreppanel.addCheckBox(fileinfo);	
+						
+						msg2.setText("fileinfo added");
+							msg2.setText("failedd");
 						
 						
-						
-
+						msg2.setVisible(true);
+						filename.setText("");		
 						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
@@ -164,6 +159,15 @@ public class OpenFilePanel extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+			         catch(NumberFormatException ex)
+			        {
+			   		 msg2.setText("Invalid File Address!");
+			   		 msg2.setVisible(true);
+			   	  }
+			   }
+			   else if(e.getSource() == loadmorefile)
+			   {
+				   //the '...' button for handling more files
 			   }
 		     }		
 	   }

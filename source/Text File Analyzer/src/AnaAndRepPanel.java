@@ -8,7 +8,7 @@ import java.util.*;
 public class AnaAndRepPanel extends JPanel{
 	private ArrayList filelist;
 	private JPanel wholepanel, lowLeftPanel, lowRightPanel, lowwholepanel;
-	private JLabel msg, lines, blankslines, spaces, words, avechar, avewordlength, commonwords;
+	private JLabel msg, msg2,lines, blankslines, spaces, words, avechar, avewordlength, commonwords;
 	private JTextField lines1, blankslines1, spaces1, words1, avechar1, avewordlength1, commonwords1;
 	private JScrollPane scroll;
 	private OpenFilePanel openfilepanel;
@@ -17,6 +17,7 @@ public class AnaAndRepPanel extends JPanel{
 	{
 		
 		   msg = new JLabel("Analysis Details: ");
+		   msg2 = new JLabel("File List: ");
 		   
 		   lines = new JLabel("The number of lines: ");
 		   blankslines = new JLabel("The number of blank lines: ");
@@ -40,13 +41,10 @@ public class AnaAndRepPanel extends JPanel{
 		
 		lowLeftPanel = new JPanel();
 		lowLeftPanel.setPreferredSize(new Dimension(400,300));
-		
-	
-		
+		lowLeftPanel.add(msg2);
 		scroll = new JScrollPane(lowLeftPanel);
 		
-		lowRightPanel = new JPanel();
-		
+		lowRightPanel = new JPanel();	
 		lowRightPanel.setLayout(new GridLayout(7,2));
 		lowRightPanel.add(lines);
 		lowRightPanel.add(lines1);
@@ -77,39 +75,56 @@ public class AnaAndRepPanel extends JPanel{
 		
 	}
 	
-	public void addCheckBox(Fileinfo finfo) //checkbox used to indicate whether or not the computer should be added to the purchase
+	public void addCheckBox(Fileinfo fileinfo) //checkbox used to indicate whether or not the computer should be added to the purchase
 	{
-		JCheckBox temp=new JCheckBox(finfo.toString());
+		//finfo = new Fileinfo();
+		 int numoflines3 = 0;  //testing
+		 numoflines3 = fileinfo.getnumoflines(); //testing
+		 lines1.setText("nihao");//testing
+		 
+		 
+		JCheckBox temp=new JCheckBox(String.valueOf(fileinfo.getnumoflines()));
 		temp.addItemListener(new CheckBoxListener());
+		 
 		lowLeftPanel.add(temp);
+		//return true;
 	}
 	
 	private class CheckBoxListener implements ItemListener //listener to add the computer to the purchase amount when box is checked
 	  {
 		 public void itemStateChanged(ItemEvent event)
-	        {
-			 	
-			 
+	        {		
+			 int numoflines2 = 0;
+			 for(int i=0; i<filelist.size(); i++)
+	            {
+					if(((JCheckBox)lowLeftPanel.getComponent(i)).isSelected())
+					{
+						 numoflines2 = ((Fileinfo)filelist.get(i)).getnumoflines();
+						
+					}
+	            }
+			 		lines1.setText(String.valueOf(numoflines2));
 	        }
-	  }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	  }	
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
