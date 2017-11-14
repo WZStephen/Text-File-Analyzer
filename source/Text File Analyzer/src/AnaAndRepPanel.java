@@ -74,7 +74,7 @@ public class AnaAndRepPanel extends JPanel
 		 //Fileinfo finfo = new Fileinfo();
 		    JCheckBox temp = new JCheckBox(finfo.toString());
 		    temp.addItemListener(new CheckBoxListener());	 
-			lowLeftPanel.add(temp);
+			lowLeftPanel.add(temp);/nhbjk
 	}
 	
 	private class CheckBoxListener implements ItemListener //listener to add the computer to the purchase amount when box is checked
