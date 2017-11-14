@@ -10,8 +10,8 @@ import java.io.*;
 
 public class OpenFilePanel extends JPanel {
 	
-		private ArrayList filelist;
-		 private AnaAndRepPanel anaandreppanel;
+	   private ArrayList filelist;
+	   private AnaAndRepPanel anaandreppanel;
 	   private JPanel toolpanel, subpanel, wholepanel;
 	   private JLabel msg1, msg2;
 	   private JTextField filename;
@@ -57,6 +57,7 @@ public class OpenFilePanel extends JPanel {
 		   
 		   public void actionPerformed(ActionEvent e)
 		     {
+			   Fileinfo fileinfo = new Fileinfo();
 			   
 			   int linecounter = 0;
 			   int blanklinecounter = 0;
@@ -79,9 +80,10 @@ public class OpenFilePanel extends JPanel {
 			   }  			   
 			   else if(e.getSource() == Analyze)  //analysis the file by address
 			   {
-				   File file = new File(filename.getText()); //read the file by address
-				   Fileinfo fileinfo = new Fileinfo();
+				   File file = new File(filename.getText()); //read the file by address	   
 			        try {
+			        	
+			        	
 						BufferedReader br = new BufferedReader(new FileReader(file));
 						BufferedReader br1 = new BufferedReader(new FileReader(file));
 						BufferedReader br2 = new BufferedReader(new FileReader(file));
@@ -94,8 +96,6 @@ public class OpenFilePanel extends JPanel {
 						{
 							linecounter++;		
 						}
-						//msg2.setText(String.valueOf(linecounter));
-						
 						
 						while((st1 = br1.readLine())!= null) //count the number of blank lines
 						{
@@ -104,8 +104,6 @@ public class OpenFilePanel extends JPanel {
 								blanklinecounter++;
 							}
 						}
-						//msg2.setText(String.valueOf(blanklinecounter));
-						fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
 						
 						while((st2 = br2.readLine()) != null) //count the number of space 
 						{
@@ -115,8 +113,6 @@ public class OpenFilePanel extends JPanel {
 							    	 spacecounter++;
 							}
 						}
-						//msg2.setText(String.valueOf(spacecounter));
-						fileinfo.setnumofblanklines(spacecounter); //store the number of space to fileinfo class
 						
 						int numofchar = 0;
 						while((st3 = br3.readLine()) != null)  //count the the average character perline
@@ -131,24 +127,26 @@ public class OpenFilePanel extends JPanel {
 								numofchar++;
 							}							
 						}
-						//msg2.setText(String.valueOf(numofcharperline));
+						
 						numofcharperline = numofchar/linecounter;   //calculate number of characters per line.
-						fileinfo.setavecharperline(numofcharperline); //store the number of characters per line to fileinfo class
+						
 						
 						averagewordlength = numofchar/ (spacecounter + 2); //calculate average word length
 						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
 						
-						
-						  
-
 						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class	
+						fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
+						fileinfo.setnumofspaces(spacecounter);//store the number of space to fileinfo class
+						fileinfo.setavecharperline(numofcharperline); //store the number of characters per line to fileinfo class
+							
 						int testvalue = fileinfo.getnumoflines();
 						msg2.setText(String.valueOf(testvalue));	
+						
 						//msg2.setText(String.valueOf(linecounter));					
 						filelist.add(fileinfo);
 						
-						 AnaAndRepPanel anaandreppanel = new AnaAndRepPanel(filelist);
-						anaandreppanel.addCheckBox(testvalue);						
+						AnaAndRepPanel anaandreppanel = new AnaAndRepPanel(filelist);
+						anaandreppanel.addCheckBox(fileinfo);						
 						//msg2.setText("fileinfo added");
 										
 						msg2.setVisible(true);

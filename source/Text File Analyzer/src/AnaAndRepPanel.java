@@ -62,16 +62,19 @@ public class AnaAndRepPanel extends JPanel
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 	    add(scroll);
 	    add(lowRightPanel);
-	     
+	    
 	    Fileinfo finfo = new Fileinfo();
-	    temp = new JCheckBox(finfo.toString());
+	    JCheckBox temp = new JCheckBox(finfo.toString());
 	    temp.addItemListener(new CheckBoxListener());	 
 		lowLeftPanel.add(temp);
 	}
 	
-	public void addCheckBox(int tvalue) //checkbox used to indicate whether or not the computer should be added to the purchase
+	public void addCheckBox(Fileinfo finfo) //checkbox used to indicate whether or not the computer should be added to the purchase
 	{
-		lines1.setText(String.valueOf(tvalue));
+		 //Fileinfo finfo = new Fileinfo();
+		    JCheckBox temp = new JCheckBox(finfo.toString());
+		    temp.addItemListener(new CheckBoxListener());	 
+			lowLeftPanel.add(temp);
 	}
 	
 	private class CheckBoxListener implements ItemListener //listener to add the computer to the purchase amount when box is checked

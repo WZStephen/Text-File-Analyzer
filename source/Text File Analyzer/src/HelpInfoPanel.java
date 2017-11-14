@@ -14,7 +14,7 @@ public class HelpInfoPanel extends JPanel{
 	public HelpInfoPanel()
 	{
 		
-		/*JFrame frame = new JFrame();
+		JFrame frame = new JFrame();
 		frame.setLayout(new GridLayout());
 		JLabel label = new JLabel("<html>"
 				+"<p>Instructions are as follow:</p>"
@@ -36,7 +36,7 @@ public class HelpInfoPanel extends JPanel{
 		
 		
 		add(label);
-		*/
+		
 		
 		
 		

@@ -9,8 +9,8 @@ public class Fileinfo {
 	private int numofspaces;
 	private int numofwords;
 	private double averageCperline;
-	private int averageWlength;
-	private char mostcommonword;
+	private double averageWlength;
+	private String mostcommonword;
 
 	
 	public Fileinfo()
@@ -20,9 +20,9 @@ public class Fileinfo {
 		numofspaces = 0;
 		numofwords = 0;
 		averageCperline = 0;
-		averageWlength = 0;
+		averageWlength = 0.0;
 		averageCperline = 0.0;
-		mostcommonword = '\0';		
+		mostcommonword = "?";		
 	}
 	public int getnumoflines()  //get the value from class
 	{
@@ -44,28 +44,49 @@ public class Fileinfo {
 	{
 		return averageCperline;
 	}
-	public int getaverageWlength()
+	public double getaverageWlength()
 	{
 		return averageWlength;
 	}
-	public char getmostcommonword()
+	public String getmostcommonword()
 	{
 		return mostcommonword;
 	}
 	
 	
-	public int setnumoflies(int linecounter) //set the value of input to class
+	public void setnumoflies(int linecounter) //set the value of input to class
 	{
 		numoflines = linecounter;
-		return numoflines;
 	}
+	
 	public void setnumofblanklines(int blanklinecounter)
 	{
 		numofblanklines = blanklinecounter;
 	}
+	
+	public void setnumofspaces(int spacecounter)
+	{
+		numofspaces = spacecounter;
+	}
+	
+	public void setnumofwords(int wordscounter)
+	{
+		numofwords = wordscounter;
+	}
+	
 	public void setavecharperline(double averageCperline)
 	{
 		this.averageCperline  =  averageCperline;
+	}
+	
+	public void setavewordlength(double averageWlength)
+	{
+		this.averageWlength = averageWlength;
+	}
+	
+	public void setmostcommonword(String mostcommonword)
+	{
+		this.mostcommonword = mostcommonword;
 	}
 	
 	public String toString()
@@ -73,11 +94,6 @@ public class Fileinfo {
         //NumberFormat fmt = NumberFormat.getCurrencyInstance();
 		String result;
 		result = "num of lines: " + numoflines ;
-		return result;
-			
-	}
-	
-
-	
-	
+		return result;		
+	}	
 }
