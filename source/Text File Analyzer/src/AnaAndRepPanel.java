@@ -4,11 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.*;
 import java.io.*;
-import java.util.Scanner;
-import javax.swing.*;
-import javax.swing.text.*;
 
 public class AnaAndRepPanel extends JPanel{
 	private ArrayList filelist;
@@ -66,20 +62,23 @@ public class AnaAndRepPanel extends JPanel{
 		add(lowRightPanel);
 //-----------------------------------------------finished setting layout
 //-----------------------------------------------begin to read Analysis.txt		
-		String str, display = null;
+
+		JTextArea textArea = new JTextArea();
+
 		File file = new File("Analysis list.txt");
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
-			while((str = br.readLine()) != null)
+			String str;
+			while((str = br.readLine()) != null)  // while there exists lines to read in the text file
 			{
-				display += str;
+				textArea.append(str);
+				textArea.append(System.getProperty("line.separator"));
 			}
-		
-		
-		}
-		
-		
+			//textArea.append(str);
+			br.close();
+				
+		}		
 		catch(IOException ee)
 		{
 			 msg.setForeground(Color.red);
@@ -87,10 +86,10 @@ public class AnaAndRepPanel extends JPanel{
 		}
 		
 		
-		
+		lowLeftPanel.add(textArea);
 		
 		Fileinfo finfo = new Fileinfo();
-		lowLeftPanel.setPreferredSize(new Dimension(400,300));
+		lowLeftPanel.setPreferredSize(new Dimension(650,300));
 		JCheckBox temp = new JCheckBox(finfo.toString());
 		lowLeftPanel.add(temp);
 		

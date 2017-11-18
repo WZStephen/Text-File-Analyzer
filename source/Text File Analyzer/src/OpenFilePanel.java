@@ -1,6 +1,5 @@
 //This class will be enable user to search and analysis
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.awt.event.ActionEvent;
@@ -10,29 +9,31 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
 import java.io.*;
 
-public class OpenFilePanel extends JPanel {
+public class OpenFilePanel extends JPanel 
+{
 	
 		private ArrayList filelist;
-	   private JPanel toolpanel, subpanel, wholepanel;
+	   private JPanel toolpanel, subpanel;
 	   private JLabel msg1, msg2;
 	   private JTextField filename;
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
-	   private Fileinfo fileinfo;
-	   private AnaAndRepPanel anaandreppanel;
+	  // private AnaAndRepPanel anaandreppanel;
 	   
 	   public OpenFilePanel(ArrayList filelist, AnaAndRepPanel apanel)
 	   {
 		   this.filelist = filelist;
-		   this.anaandreppanel = apanel;
+		 //  anaandreppanel = apanel;
+		   
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
 		   msg2 = new JLabel("Notification Window");
 		   msg2.setForeground(Color.red);
 		   Analyze = new JButton("Analyze!");		  //create a 'Analyze' button and add listener on it
 		   Analyze.addActionListener(new ButtonListener());
 		   Browse = new JButton("Browse");            //create a 'Browse' button and add listener on it
+		 
 		   Browse.addActionListener(new ButtonListener());
-		   loadmorefile = new JButton("...");
+		   JButton loadmorefile = new JButton("...");
 		   loadmorefile.addActionListener(new ButtonListener());
 		   
 		   filename = new JTextField("Type Filename here...");
@@ -61,7 +62,7 @@ public class OpenFilePanel extends JPanel {
 		   
 		   public void actionPerformed(ActionEvent e)
 		     {
-			   //anaandreppanel = new AnaAndRepPanel(filelist);
+			   
 			   
 			   int linecounter = 0;
 			   int blanklinecounter = 0;
@@ -71,6 +72,17 @@ public class OpenFilePanel extends JPanel {
 			   double averagewordlength = 0.0;
 			   char mostcommonword[];
 			   
+			   File file = new File(filename.getText()); //read the file by address
+			   Fileinfo fileinfo = new Fileinfo();
+			   
+			      	
+				BufferedReader br;
+				BufferedReader br1;
+				BufferedReader br2 ;
+				BufferedReader br3 ;
+			//BufferedReader br4;				
+				
+				
 			   if(e.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
@@ -86,19 +98,17 @@ public class OpenFilePanel extends JPanel {
 			   }  			   
 			   else if(e.getSource() == Analyze)  //analysis the file by address
 			   {
-				   File file = new File(filename.getText()); //read the file by address
-				   Fileinfo fileinfo = new Fileinfo();
+				  
+				   String st,st1,st2,st3,st4;
+				   AnaAndRepPanel anaandreppanel = new AnaAndRepPanel(filelist);				  
 			        try {
-			        	Scanner in = new Scanner(file);
+			        	//in = new Scanner(file);
+			        	br = new BufferedReader(new FileReader(file));
+			        	br1 = new BufferedReader(new FileReader(file));
+			        	br2 = new BufferedReader(new FileReader(file));
+			        	br3 = new BufferedReader(new FileReader(file));
+			        //	br4 = new BufferedReader(new FileReader(file));
 			        	
-						BufferedReader br = new BufferedReader(new FileReader(file));
-						BufferedReader br1 = new BufferedReader(new FileReader(file));
-						BufferedReader br2 = new BufferedReader(new FileReader(file));
-						BufferedReader br3 = new BufferedReader(new FileReader(file));
-						BufferedReader br4 = new BufferedReader(new FileReader(file));
-						
-						String st,st1,st2,st3,st4;
-						
 						while((st = br.readLine()) != null)  //get # lines
 						{
 							linecounter++;		
@@ -138,27 +148,29 @@ public class OpenFilePanel extends JPanel {
 						
 						numofwords = spacecounter + 2;
 						
-						avecharperline = (spacecounter+2)/linecounter;   //set Average chars per line
+						avecharperline = numofchar/linecounter;   //set Average chars per line
 						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
 						
 						averagewordlength = numofchar/ (spacecounter + 2); //set Average word length
 						
-						  			
+		
 						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
 						fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
 						fileinfo.setnumofspaces(spacecounter); //store the number of space to fileinfo class
 						fileinfo.setavecharperline(avecharperline); //store the number of characters per line to fileinfo class
 						fileinfo.setnumofwords(numofwords);;
 						fileinfo.setaverageWlength(averagewordlength);
-						
+											
 						//msg2.setText(String.valueOf(linecounter));					
 						filelist.add(fileinfo);
-					
+						  
 						anaandreppanel.addCheckBox(1);
+						 msg2.setText("Fileinfo Added");
+						 msg2.setVisible(true);
 						
-						msg2.setText("Fileinfo Added");
-						msg2.setVisible(true);
 						
+						  
+						  
 						
 						BufferedWriter writer = null;	// writes to a textfile of the details of a file analyzed
 						try 
@@ -185,14 +197,8 @@ public class OpenFilePanel extends JPanel {
 						    {
 						    }
 						}
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-			         catch(NumberFormatException ex)
+					} 
+			         catch(NumberFormatException | IOException ex)
 			        {
 			   		 msg2.setText("Invalid File Address!");
 			   		 msg2.setVisible(true);
