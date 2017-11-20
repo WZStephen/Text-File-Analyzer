@@ -8,7 +8,7 @@ The number of spaces is:3
 
 The number of words is:5
 
-The average number of characters per line is:2.0
+The average number of characters per line is:14.0
 
 The average of word length is:5.0
 
