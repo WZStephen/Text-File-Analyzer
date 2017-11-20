@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.io.*;
 
 public class AnaAndRepPanel extends JPanel{
 	private ArrayList filelist;
@@ -12,9 +11,7 @@ public class AnaAndRepPanel extends JPanel{
 	private JLabel msg, msg2,lines, blankslines, spaces, words, avechar, avewordlength, commonwords;
 	private JTextField lines1, blankslines1, spaces1, words1, avechar1, avewordlength1, commonwords1;
 	private JScrollPane scroll;
-	private JCheckBox temp;
-	private OpenFilePanel openfilepanel;
-	
+
 	public AnaAndRepPanel(ArrayList filelist)
 	{
 		
@@ -36,7 +33,7 @@ public class AnaAndRepPanel extends JPanel{
 		   avechar1 = new JTextField(10);
 		   avewordlength1 = new JTextField(10);
 		   commonwords1 = new JTextField(10);
-		
+
 		
 		lowRightPanel = new JPanel();	
 		lowRightPanel.setLayout(new GridLayout(7,2));
@@ -56,60 +53,21 @@ public class AnaAndRepPanel extends JPanel{
 		lowRightPanel.add(commonwords1);
 			
 		lowLeftPanel = new JPanel();
+		lowLeftPanel.add(msg);
 		scroll = new JScrollPane(lowLeftPanel);
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(scroll);
-		add(lowRightPanel);
-//-----------------------------------------------finished setting layout
-//-----------------------------------------------begin to read Analysis.txt		
-
-		JTextArea textArea = new JTextArea();
-
-		File file = new File("Analysis list.txt");
-		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			String str;
-			while((str = br.readLine()) != null)  // while there exists lines to read in the text file
-			{
-				textArea.append(str);
-				textArea.append(System.getProperty("line.separator"));
-			}
-			//textArea.append(str);
-			br.close();
-				
-		}		
-		catch(IOException ee)
-		{
-			 msg.setForeground(Color.red);
-			 msg.setText("No analysis file has been created yet");
-		}
-		
-		
-		lowLeftPanel.add(textArea);
-		
-		Fileinfo finfo = new Fileinfo();
-		lowLeftPanel.setPreferredSize(new Dimension(650,300));
-		JCheckBox temp = new JCheckBox(finfo.toString());
-		lowLeftPanel.add(temp);
-		
-		
-		
+		add(lowRightPanel);				
 	}
 	
-	public void addCheckBox(int test) //checkbox used to indicate whether or not the computer should be added to the purchase
+	public void addCheckBox(Fileinfo test) //checkbox used to indicate whether or not the computer should be added to the purchase
 	{
-		//finfo = new Fileinfo();
-		 int numoflines3 = 0;  //testing
-		// numoflines3 = fileinfo.getnumoflines(); //testing
-		 lines1.setText("nihao");//testing
 		 
-		 
-		JCheckBox temp=new JCheckBox(String.valueOf(test));
-		temp.addItemListener(new CheckBoxListener());
-		 
+		JLabel testing = new JLabel("success");
+		JCheckBox temp=new JCheckBox(test.toString());
+		//temp.addItemListener(new CheckBoxListener());
+		lowLeftPanel.add(testing);
 		lowLeftPanel.add(temp);
-		//return true;
 	}
 	
 	private class CheckBoxListener implements ItemListener //listener to add the computer to the purchase amount when box is checked
@@ -117,6 +75,7 @@ public class AnaAndRepPanel extends JPanel{
 		 public void itemStateChanged(ItemEvent event)
 	        {		
 			 int numoflines2 = 0;
+			 
 			 for(int i=0; i<filelist.size(); i++)
 	            {
 					if(((JCheckBox)lowLeftPanel.getComponent(i)).isSelected())

@@ -45,8 +45,10 @@ public class PurchasePanel extends JPanel
 
 	public void addCheckBox(Computer comp) //checkbox used to indicate whether or not the computer should be added to the purchase
 	{
+		JLabel msg1 = new JLabel("success");
 		JCheckBox temp=new JCheckBox(comp.toString());
-		temp.addItemListener(new CheckBoxListener());
+		//temp.addItemListener(new CheckBoxListener());
+		lPanel.add(msg1);
 		lPanel.add(temp);
 	}
 

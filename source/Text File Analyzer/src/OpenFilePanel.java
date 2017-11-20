@@ -11,19 +11,19 @@ import java.io.*;
 
 public class OpenFilePanel extends JPanel 
 {
-	
-		private ArrayList filelist;
+
+	   private ArrayList filelist;
 	   private JPanel toolpanel, subpanel;
 	   private JLabel msg1, msg2;
 	   private JTextField filename;
 	   private JScrollPane scroll;
 	   private JButton Analyze, Browse, loadmorefile;
-	  // private AnaAndRepPanel anaandreppanel;
+	   private AnaAndRepPanel anaandreppanel;
 	   
 	   public OpenFilePanel(ArrayList filelist, AnaAndRepPanel apanel)
 	   {
 		   this.filelist = filelist;
-		 //  anaandreppanel = apanel;
+		   this.anaandreppanel = apanel;
 		   
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
 		   msg2 = new JLabel("Notification Window");
@@ -57,10 +57,12 @@ public class OpenFilePanel extends JPanel
 		   add(scroll);
 				 	   
 	   }   
+	   
+	   
 	   private class ButtonListener implements ActionListener
 	   {
 		   
-		   public void actionPerformed(ActionEvent e)
+		   public void actionPerformed(ActionEvent event)
 		     {
 			   
 			   
@@ -70,20 +72,137 @@ public class OpenFilePanel extends JPanel
 			   int numofwords = 0;
 			   double avecharperline = 0.0;
 			   double averagewordlength = 0.0;
-			   char mostcommonword[];
+			 //char mostcommonword[];
 			   
 			   File file = new File(filename.getText()); //read the file by address
 			   Fileinfo fileinfo = new Fileinfo();
 			   
-			      	
+			   String st,st1,st2,st3,st4;
 				BufferedReader br;
 				BufferedReader br1;
 				BufferedReader br2 ;
 				BufferedReader br3 ;
-			//BufferedReader br4;				
+			  //BufferedReader br4;				
+			 	
 				
 				
-			   if(e.getSource() == Browse)  //find the location of file, get address
+		        try {
+		        	//in = new Scanner(file);
+		        	br = new BufferedReader(new FileReader(file));
+		        	br1 = new BufferedReader(new FileReader(file));
+		        	br2 = new BufferedReader(new FileReader(file));
+		        	br3 = new BufferedReader(new FileReader(file));
+		          //br4 = new BufferedReader(new FileReader(file));
+		        	
+					while((st = br.readLine()) != null)  //get # lines
+					{
+						linecounter++;		
+					}
+										
+					while((st1 = br1.readLine())!= null) //get # blank lines
+					{
+						if(st1 != null && st1.trim().equals( "" ))
+						{
+							blanklinecounter++;
+						}
+					}
+										
+					while((st2 = br2.readLine()) != null) //get # spaces
+					{
+						for(int i = 0; i < st2.length(); i++) 
+						{
+						     if(Character.isWhitespace(st2.charAt(i))) 
+						    	 spacecounter++;
+						}
+					}
+					
+														
+					int numofchar = 0;
+					while((st3 = br3.readLine()) != null)  //count the the average character perline
+					{
+						
+						for(int i = 0; i < st3.length(); i++) 
+						{								
+							if(Character.isWhitespace(st3.charAt(i))) 
+							{
+								continue;	
+							}
+							numofchar++;
+						}							
+					}
+					
+					numofwords = spacecounter + 2;
+					
+					avecharperline = numofchar/linecounter;   //set Average chars per line
+					//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
+					
+					averagewordlength = numofchar/ (spacecounter + 2); //set Average word length
+					
+					
+					BufferedWriter writer = null;	// writes to a textfile of the details of a file analyzed
+					try 
+					{
+					    writer = new BufferedWriter( new FileWriter("Analysis list.txt", true));
+					    writer.write("The name of the read textfile is:" + filename.getText() + "\n"); writer.newLine();
+					    writer.write("The number of lines is:" + linecounter + "\n"); writer.newLine();
+					    writer.write( "The number of blank lines is:" + blanklinecounter + "\n"); writer.newLine();
+					    writer.write("The number of spaces is:" + spacecounter + "\n"); writer.newLine();
+					    writer.write("The number of words is:" + numofwords + "\n"); writer.newLine();
+					    writer.write("The average number of characters per line is:" + avecharperline + "\n"); writer.newLine();
+					    writer.write("The average of word length is:" + averagewordlength + "\n"); writer.newLine();
+					}
+					catch (IOException ee)
+					{}
+					finally 
+					{
+					    try
+					    {
+					        if ( writer != null)
+					        writer.close( );
+					    }
+					    catch (IOException ee)
+					    {
+					    }
+					}
+				} 
+		         catch(NumberFormatException | IOException ex)
+		        {
+		   		 msg2.setText("Invalid File Address!");
+		   		 msg2.setVisible(true);
+		   	  }
+		        
+		        
+				
+			     
+			    if(event.getSource() == Analyze)  //analysis the file by address
+			   {
+				   anaandreppanel = new AnaAndRepPanel(filelist);	
+					
+					anaandreppanel.addCheckBox(fileinfo);
+					
+				   try {
+				   fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
+					/*fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
+					fileinfo.setnumofspaces(spacecounter); //store the number of space to fileinfo class
+					fileinfo.setavecharperline(avecharperline); //store the number of characters per line to fileinfo class
+					fileinfo.setnumofwords(numofwords);;
+					fileinfo.setaverageWlength(averagewordlength);*/
+										
+					//msg2.setText(String.valueOf(linecounter));					
+					filelist.add(fileinfo);
+					anaandreppanel = new AnaAndRepPanel(filelist);	
+					
+					anaandreppanel.addCheckBox(fileinfo);
+					 msg2.setText("Fileinfo Added");
+					 msg2.setVisible(true);
+				   }
+				   catch(NumberFormatException ex)
+				     {
+						 msg2.setText("Failed");
+						 msg2.setVisible(true);
+				     }
+			   }
+			   else if(event.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
 				   JFileChooser fileChooser = new JFileChooser();		
@@ -95,116 +214,8 @@ public class OpenFilePanel extends JPanel
 			        
 			        fileaddress = filename.getText();
 			        msg2.setText(fileaddress);			        			      		        
-			   }  			   
-			   else if(e.getSource() == Analyze)  //analysis the file by address
-			   {
-				  
-				   String st,st1,st2,st3,st4;
-				   AnaAndRepPanel anaandreppanel = new AnaAndRepPanel(filelist);				  
-			        try {
-			        	//in = new Scanner(file);
-			        	br = new BufferedReader(new FileReader(file));
-			        	br1 = new BufferedReader(new FileReader(file));
-			        	br2 = new BufferedReader(new FileReader(file));
-			        	br3 = new BufferedReader(new FileReader(file));
-			        //	br4 = new BufferedReader(new FileReader(file));
-			        	
-						while((st = br.readLine()) != null)  //get # lines
-						{
-							linecounter++;		
-						}
-											
-						while((st1 = br1.readLine())!= null) //get # blank lines
-						{
-							if(st1 != null && st1.trim().equals( "" ))
-							{
-								blanklinecounter++;
-							}
-						}
-											
-						while((st2 = br2.readLine()) != null) //get # spaces
-						{
-							for(int i = 0; i < st2.length(); i++) 
-							{
-							     if(Character.isWhitespace(st2.charAt(i))) 
-							    	 spacecounter++;
-							}
-						}
-						
-															
-						int numofchar = 0;
-						while((st3 = br3.readLine()) != null)  //count the the average character perline
-						{
-							
-							for(int i = 0; i < st3.length(); i++) 
-							{								
-								if(Character.isWhitespace(st3.charAt(i))) 
-								{
-									continue;	
-								}
-								numofchar++;
-							}							
-						}
-						
-						numofwords = spacecounter + 2;
-						
-						avecharperline = numofchar/linecounter;   //set Average chars per line
-						//msg2.setText(String.valueOf(averagewordlength)); //store the number of word length to fileinfo class
-						
-						averagewordlength = numofchar/ (spacecounter + 2); //set Average word length
-						
-		
-						fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
-						fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
-						fileinfo.setnumofspaces(spacecounter); //store the number of space to fileinfo class
-						fileinfo.setavecharperline(avecharperline); //store the number of characters per line to fileinfo class
-						fileinfo.setnumofwords(numofwords);;
-						fileinfo.setaverageWlength(averagewordlength);
-											
-						//msg2.setText(String.valueOf(linecounter));					
-						filelist.add(fileinfo);
-						  
-						anaandreppanel.addCheckBox(1);
-						 msg2.setText("Fileinfo Added");
-						 msg2.setVisible(true);
-						
-						
-						  
-						  
-						
-						BufferedWriter writer = null;	// writes to a textfile of the details of a file analyzed
-						try 
-						{
-						    writer = new BufferedWriter( new FileWriter("Analysis list.txt", true));
-						    writer.write("The name of the read textfile is:" + filename.getText() + "\n"); writer.newLine();
-						    writer.write("The number of lines is:" + linecounter + "\n"); writer.newLine();
-						    writer.write( "The number of blank lines is:" + blanklinecounter + "\n"); writer.newLine();
-						    writer.write("The number of spaces is:" + spacecounter + "\n"); writer.newLine();
-						    writer.write("The number of words is:" + numofwords + "\n"); writer.newLine();
-						    writer.write("The average number of characters per line is:" + avecharperline + "\n"); writer.newLine();
-						    writer.write("The average of word length is:" + averagewordlength + "\n"); writer.newLine();
-						}
-						catch (IOException ee)
-						{}
-						finally
-						{
-						    try
-						    {
-						        if ( writer != null)
-						        writer.close( );
-						    }
-						    catch (IOException ee)
-						    {
-						    }
-						}
-					} 
-			         catch(NumberFormatException | IOException ex)
-			        {
-			   		 msg2.setText("Invalid File Address!");
-			   		 msg2.setVisible(true);
-			   	  }
-			   }
-			   else if(e.getSource() == loadmorefile)
+			   }  			
+			   else
 			   {
 				   //the '...' button for handling more files
 			   }
