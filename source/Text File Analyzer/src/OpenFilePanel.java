@@ -1,16 +1,18 @@
 //This class will be enable user to search and analysis
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
 import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map.Entry;
 
 public class OpenFilePanel extends JPanel 
 {
@@ -40,8 +42,7 @@ public class OpenFilePanel extends JPanel
 		   loadmorefile.addActionListener(new ButtonListener());
 		   
 		   filename = new JTextField("Type Filename here...");
-		   
-		   
+		   	   
 		   toolpanel = new JPanel();	
 		   toolpanel.setLayout(new GridLayout(5,1));
 		   
@@ -55,7 +56,7 @@ public class OpenFilePanel extends JPanel
 		   toolpanel.add(loadmorefile);
 		   toolpanel.add(Analyze);
 	   	   toolpanel.add(msg2);
-	   	toolpanel.setPreferredSize(new Dimension(400,300));
+	   	   toolpanel.setPreferredSize(new Dimension(400,300));
 		   scroll = new JScrollPane(toolpanel);
 		   add(scroll);
 				 	   
@@ -90,8 +91,8 @@ public class OpenFilePanel extends JPanel
 					   int numofwords = 0;
 					   double avecharperline = 0.0;
 					   double averagewordlength = 0.0;
-					 //char mostcommonword[];
-					   
+					   String mostcommonword = "?";
+					   Date anadate = null;
 					  
 					   
 					   String st,st1,st2,st3,st4;
@@ -157,40 +158,105 @@ public class OpenFilePanel extends JPanel
 							averagewordlength = numofchar/ (spacecounter + 2); //set Average word length
 							
 							
-							   try {
-							   fileinfo.setnumoflies(linecounter); //store the number of line to fileinfo class
-								/*fileinfo.setnumofblanklines(blanklinecounter); //store the number of blank lines to fileinfo class
-								fileinfo.setnumofspaces(spacecounter); //store the number of space to fileinfo class
-								fileinfo.setavecharperline(avecharperline); //store the number of characters per line to fileinfo class
-								fileinfo.setnumofwords(numofwords);;
-								fileinfo.setaverageWlength(averagewordlength);*/
-													
-								msg2.setText(String.valueOf(linecounter));					
-								filelist.add(fileinfo);
-								anaandreppanel = new AnaAndRepPanel(filelist);	
-								
-								anaandreppanel.addCheckBox(fileinfo);
-								 //msg2.setText("Fileinfo Added");
-								 //msg2.setVisible(true);
-							   }
-							   catch(NumberFormatException ex)
-							     {
-									 msg2.setText("Failed");
-									 msg2.setVisible(true);
-							     }
-							   
-							   
+							//count the most common word
+					        HashMap<String, Integer> wordCountMap = new HashMap<String, Integer>();				  
+					        BufferedReader reader = null;      
+					        try
+					        {
+					            //Creating BufferedReader object
+					             
+					            reader = new BufferedReader(new FileReader(file));
+					             
+					            //Reading the first line into currentLine
+					             
+					            String currentLine = reader.readLine();
+					             
+					            while (currentLine != null)
+					            {    
+					                //splitting the currentLine into words
+					                 
+					                String[] words = currentLine.toLowerCase().split(" ");
+					                 
+					                //Iterating each word
+					                 
+					                for (String word : words)
+					                {
+					                    //if word is already present in wordCountMap, updating its count
+					                     
+					                    if(wordCountMap.containsKey(word))
+					                    {    
+					                        wordCountMap.put(word, wordCountMap.get(word)+1);
+					                    }
+					                     
+					                    //otherwise inserting the word as key and 1 as its value
+					                    else
+					                    {
+					                        wordCountMap.put(word, 1);
+					                    }
+					                }
+					                 
+					                //Reading next line into currentLine
+					                 
+					                currentLine = reader.readLine();
+					            }
+					             
+					            //Getting the most repeated word and its occurrence
+					             
+					            String mostRepeatedWord = null;
+					             
+					            int count = 0;
+					             
+					            Set<Entry<String, Integer>> entrySet = wordCountMap.entrySet();
+					             
+					            for (Entry<String, Integer> entry : entrySet)
+					            {
+					                if(entry.getValue() > count)
+					                {
+					                    mostRepeatedWord = entry.getKey();
+					                     
+					                    count = entry.getValue();
+					                }
+					            }
+					             
+					            mostcommonword = mostRepeatedWord;
+					           // msg2.setText(mostRepeatedWord);
+					            //System.out.println("The most repeated word in input file is : "+mostRepeatedWord);
+					             
+					            //System.out.println("Number Of Occurrences : "+count);
+					        } 
+					        catch (IOException e) 
+					        {
+					            e.printStackTrace();
+					        }
+					        finally
+					        {
+					            try
+					            {
+					                reader.close();           //Closing the reader
+					            }
+					            catch (IOException e) 
+					            {
+					                e.printStackTrace();
+					            }
+					        }
+					        
+					        //record the current analysis time
+					        anadate = new Date();					
+							  
+  //--------------------------------------------------------------------------------------------------------
 							BufferedWriter writer = null;	// writes to a textfile of the details of a file analyzed
 							try 
 							{
 							    writer = new BufferedWriter( new FileWriter("Analysis list.txt", true));
-							    writer.write("The name of the read textfile is:" + filename.getText() + "\n"); writer.newLine();
-							    writer.write("The number of lines is:" + linecounter + "\n"); writer.newLine();
-							    writer.write( "The number of blank lines is:" + blanklinecounter + "\n"); writer.newLine();
-							    writer.write("The number of spaces is:" + spacecounter + "\n"); writer.newLine();
-							    writer.write("The number of words is:" + numofwords + "\n"); writer.newLine();
-							    writer.write("The average number of characters per line is:" + avecharperline + "\n"); writer.newLine();
-							    writer.write("The average of word length is:" + averagewordlength + "\n"); writer.newLine();
+							    writer.write(filename.getText() + ";");
+							    writer.write(linecounter + ";");
+							    writer.write(blanklinecounter + ";");
+							    writer.write(spacecounter + ";"); 
+							    writer.write(numofwords + ";");
+							    writer.write(avecharperline + ";");
+							    writer.write(averagewordlength + ";");
+							    writer.write(mostcommonword+ ";");
+							    writer.write(anadate+"~");
 							}
 							catch (IOException eee)
 							{}
@@ -211,6 +277,9 @@ public class OpenFilePanel extends JPanel
 				   		 msg2.setText("Invalid File Address!");
 				   		 msg2.setVisible(true);
 				   	   	}
+				        
+				        msg2.setText("File Added");
+				        msg2.setVisible(true);
 				
 			   }
 			   else 			

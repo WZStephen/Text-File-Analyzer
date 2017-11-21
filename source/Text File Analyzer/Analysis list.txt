@@ -1,14 +1,1 @@
-The name of the read textfile is:C:\Users\Owner\Documents\Text-File-Analyzer\docs\Test Cases\testcase0.txt
-
-The number of lines is:2
-
-The number of blank lines is:0
-
-The number of spaces is:3
-
-The number of words is:5
-
-The average number of characters per line is:14.0
-
-The average of word length is:5.0
-
+C:\Users\Owner\Documents\Text-File-Analyzer\docs\Test Cases\Testcase0.txt;2;0;3;5;14.0;5.0;fsd;Tue Nov 21 15:40:03 MST 2017~C:\Users\Owner\Documents\Text-File-Analyzer\docs\Test Cases\TestCase1.txt;12;1;62;64;27.0;5.0;the;Tue Nov 21 15:40:53 MST 2017~

@@ -8,7 +8,7 @@ import javax.swing.JTabbedPane;
  
 public class MainOfAnalyzer extends JFrame
 {
-	private int APPLET_WIDTH = 600, APPLET_HEIGHT = 550;
+	private int APPLET_WIDTH = 800, APPLET_HEIGHT = 1000;
 	
 	private JPanel wholePanel;
 	private JTabbedPane tabPane;
