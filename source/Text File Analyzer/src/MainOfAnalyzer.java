@@ -8,7 +8,7 @@ import javax.swing.JTabbedPane;
  
 public class MainOfAnalyzer extends JFrame
 {
-	private int APPLET_WIDTH = 800, APPLET_HEIGHT = 1000;
+	private int APPLET_WIDTH = 1200, APPLET_HEIGHT = 800;
 	
 	private JPanel wholePanel;
 	private JTabbedPane tabPane;
@@ -23,9 +23,9 @@ public class MainOfAnalyzer extends JFrame
 	  
 	 filelist = new ArrayList();
 	  
-	  setTitle("CSE360 Spring 2017"); //set the title in main page
+	  setTitle("CSE360 Fall 2017"); //set the title in main page
 	  JLabel label1 = new JLabel();
-	  label1.setText("Text Analyzer");
+	  label1.setText("Text File Analyzer");
       JTabbedPane jtp = new JTabbedPane();
       jtp.add(label1);
 	  getContentPane().add(jtp);

@@ -11,16 +11,32 @@ import java.util.Scanner;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
 import java.io.*;
+//This class will be enable user to search and analysis
+import java.awt.*;
+import javax.swing.*;
+import java.util.*;
+import java.util.Map.Entry;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
+import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+
 
 public class AnaAndRepPanel extends JPanel{
 	private JPanel lowLeftPanel, lowRightPanel, wholepanel;
 	private JLabel msg, msg2,lines, blankslines, spaces, words, avechar, avewordlength, commonwords;
 	private JTextField lines1, blankslines1, spaces1, words1, avechar1, avewordlength1, commonwords1;
 	private JScrollPane scroll;
-	private JButton view;
+	private JButton view, removepocess, cleanup;
 	public ArrayList<String> list;
 	private String[] numoffiles;
-	private JButton removepocess;
+	private String[] temp;
 	public AnaAndRepPanel(ArrayList filelist)
 	{
 		
@@ -28,6 +44,7 @@ public class AnaAndRepPanel extends JPanel{
 		
 		   msg = new JLabel("Please Choose File to Show Details:  ");
 		   msg.setForeground(Color.red);
+		   
 		   lines = new JLabel("The number of lines: ");
 		   blankslines = new JLabel("The number of blank lines: ");
 		   spaces = new JLabel("The number of spaces: ");
@@ -70,7 +87,6 @@ public class AnaAndRepPanel extends JPanel{
 		lowLeftPanel.add(view);
 		lowLeftPanel.setLayout(new BoxLayout(lowLeftPanel, BoxLayout.Y_AXIS));
 		//lowLeftPanel.setPreferredSize(new Dimension(400,300));
-
 		
 		wholepanel = new JPanel();
 		wholepanel.setLayout(new BoxLayout(wholepanel, BoxLayout.X_AXIS));	
@@ -80,13 +96,17 @@ public class AnaAndRepPanel extends JPanel{
 		add(lowLeftPanel);
 		add(lowRightPanel);	
 		removepocess = new JButton("Click to remove all punctuation and possession ");
+		removepocess.addActionListener(new ButtonListener());
+		cleanup = new JButton("Click this and view to clean up history ");
+		cleanup.addActionListener(new ButtonListener());
 		add(removepocess);
+		add(cleanup);
 	}
 	
 	public void addCheckBox(String fileinfo, Date d) //checkbox used to indicate whether or not the computer should be added to the purchase
 	{
 	
-		String[] temp = fileinfo.trim().split(";");	
+		 temp = fileinfo.trim().split(";");	
 		
 		
 		JCheckBox temp1=new JCheckBox(temp[0] + " || " +temp[8]);
@@ -103,7 +123,15 @@ public class AnaAndRepPanel extends JPanel{
 		words1.setText(temp[4]);
 		avechar1.setText(temp[5]);
 		avewordlength1.setText(temp[6]);
-		commonwords1.setText(String.valueOf(temp[7]));;
+		if(temp[7] != null)
+		{
+			commonwords1.setText(String.valueOf(temp[7]));;
+		}
+		else if(temp[7] == " ")
+		{
+			commonwords1.setText("There is no most common words");
+		}
+		
 		}
 		catch(ArrayIndexOutOfBoundsException exception)
 		{			
@@ -115,6 +143,7 @@ public class AnaAndRepPanel extends JPanel{
 		   public void actionPerformed(ActionEvent event)
 		     { 
 			  
+			  
 			   
 			   if(event.getSource() == view)
 			{
@@ -124,7 +153,12 @@ public class AnaAndRepPanel extends JPanel{
 			   String content = null;
 			  try {
 				 content = new Scanner(new File("Analysis list.txt")).useDelimiter("\\Z").next();
-			} catch (FileNotFoundException | NullPointerException eeee) {
+				 if(content == null)
+				 {
+					 msg.setText("There is no analysis file!");
+				 }
+				 else {}
+			} catch (FileNotFoundException | NullPointerException | NoSuchElementException eeee ) {
 				
 				msg.setText("There is no analysis file! ");
 			}
@@ -140,11 +174,70 @@ public class AnaAndRepPanel extends JPanel{
 			  }	  
 			  
 			}	
-			   else   //if user want to remove all punctuation and possession
+			   
+			   else if(event.getSource() ==  removepocess)   //if user want to remove all punctuation and possession
 			   {
-				   
+				   File file = new File(temp[0]); //read the file by address		 				  
+				   String st;
+				   BufferedReader br; 
+				   BufferedWriter writer1 = null;
+				   FileOutputStream writer2 = null;
+				   try {
+			        	br = new BufferedReader(new FileReader(file));
+			        	
+			        	//clean up previous analyzed file
+			        	writer2 = new FileOutputStream("AfterRemoving.txt");
+						   writer2.write(("").getBytes());
+						   writer2.close();
+						   
+			        	writer1 = new BufferedWriter( new FileWriter("AfterRemoving.txt", true));
+			        	while((st = br.readLine()) != null)  //get # lines
+						{	        		 
+			        		String words = st.replaceAll("[(){},.;!?<>%':=-<>/]", "");
+			        		writer1.write(words);
+						}	   
+			        	File file1 = new File("AfterRemoving.txt"); 
+			        	msg.setText("The input file has been successfully analyzed ");
+			        	java.awt.Desktop.getDesktop().edit(file1);
+				   	  }
+				   catch (IOException e) 
+			        {
+			            e.printStackTrace();
+			        }
+				   finally 
+					{
+					    try
+					    {
+					        if ( writer1 != null)
+					        writer1.close( );
+					    }
+					    catch (IOException ee)
+					    {
+					    }
+					}
+			  }	 
+			   else
+			   {
+				   FileOutputStream writer = null;
+				   try{
+
+					   writer = new FileOutputStream("Analysis list.txt");
+					   writer.write(("").getBytes());
+					   writer.close();
+					   lines1.setText("");
+					   blankslines1.setText("");
+					   spaces1.setText("");
+					   words1.setText("");
+					   avechar1.setText("");
+					   avewordlength1.setText("");
+					   commonwords1.setText("");;
+			    	}catch(Exception e){
+
+			    		e.printStackTrace();
+
+			    	} 
+				   msg.setText("All solution has successfully cleaned up ");
 			   }
-			  }	   		   	  		     		   		     			     
 	   }
 	private class CheckBoxListener implements ItemListener //listener to add the computer to the purchase amount when box is checked
 	  {
@@ -163,7 +256,7 @@ public class AnaAndRepPanel extends JPanel{
 	        }
 	  }	
 }
-	
+}	
 	
 	
 	

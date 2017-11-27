@@ -1,1 +1,1 @@
-C:\Users\Owner\Documents\Text-File-Analyzer\docs\Test Cases\Testcase0.txt;2;0;3;5;14.0;5.0;fsd;Tue Nov 21 15:40:03 MST 2017~C:\Users\Owner\Documents\Text-File-Analyzer\docs\Test Cases\TestCase1.txt;12;1;62;64;27.0;5.0;the;Tue Nov 21 15:40:53 MST 2017~
+C:\Users\steph\Desktop\Text-File-Analyzer\docs\Test Cases\TestCase3.txt;54;7;333;335;33.0;5.0;;Mon Nov 27 09:13:49 MST 2017~

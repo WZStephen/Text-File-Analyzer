@@ -31,14 +31,17 @@ public class OpenFilePanel extends JPanel
 		   this.anaandreppanel = apanel;
 		   
 		   msg1 = new JLabel("Type/Select a file to be oprend: ");   
+		   msg1.setFont(new Font("Serif", Font.BOLD, 30));
+		   
 		   msg2 = new JLabel("Notification Window");
 		   msg2.setForeground(Color.red);
+		   msg1.setFont(new Font("Serif", Font.PLAIN, 20));
 		   Analyze = new JButton("Analyze!");		  //create a 'Analyze' button and add listener on it
 		   Analyze.addActionListener(new ButtonListener());
 		   Browse = new JButton("Browse");            //create a 'Browse' button and add listener on it
 		 
 		   Browse.addActionListener(new ButtonListener());
-		   JButton loadmorefile = new JButton("...");
+		   loadmorefile = new JButton("...");
 		   loadmorefile.addActionListener(new ButtonListener());
 		   
 		   filename = new JTextField("Type Filename here...");
@@ -56,7 +59,7 @@ public class OpenFilePanel extends JPanel
 		   toolpanel.add(loadmorefile);
 		   toolpanel.add(Analyze);
 	   	   toolpanel.add(msg2);
-	   	   toolpanel.setPreferredSize(new Dimension(400,300));
+	   	   toolpanel.setPreferredSize(new Dimension(500	,400));
 		   scroll = new JScrollPane(toolpanel);
 		   add(scroll);
 				 	   
@@ -69,7 +72,6 @@ public class OpenFilePanel extends JPanel
 		   public void actionPerformed(ActionEvent event)
 		     { 
 			   File file = new File(filename.getText()); //read the file by address
-			   Fileinfo fileinfo = new Fileinfo();	     	
 			   if(event.getSource() == Browse)  //find the location of file, get address
 			   {
 				   String fileaddress;
@@ -83,9 +85,22 @@ public class OpenFilePanel extends JPanel
 			        fileaddress = filename.getText();
 			        msg2.setText(fileaddress);			        			      		        
 			   }  
+			   else if (event.getSource() == loadmorefile)
+			   {
+				   String fileaddress;
+				   JFileChooser fileChooser = new JFileChooser();		
+				   FileFilter filter = new FileNameExtensionFilter("Text/CSV file", "txt", "csv");//set the types of files
+				   fileChooser.addChoosableFileFilter(filter);				   				   
+			       int rVal = fileChooser.showOpenDialog(null);
+			        if (rVal == JFileChooser.APPROVE_OPTION) 
+			        	filename.setText(fileChooser.getSelectedFile().toString());	
+			        
+			        fileaddress = filename.getText();
+			        msg2.setText(fileaddress);	
+			   }
 			   else if(event.getSource() == Analyze)  //analysis the file by address
 			   {
-			    	 int linecounter = 0;
+			    	   int linecounter = 0;
 					   int blanklinecounter = 0;
 					   int spacecounter = 0;
 					   int numofwords = 0;
@@ -280,6 +295,8 @@ public class OpenFilePanel extends JPanel
 				        
 				        msg2.setText("File Added");
 				        msg2.setVisible(true);
+				        
+
 				
 			   }
 			   else 			
