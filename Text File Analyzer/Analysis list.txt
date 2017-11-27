@@ -1,0 +1,1 @@
+C:\Users\steph\Desktop\Text-File-Analyzer\docs\Test Cases\TestCase3.txt;54;7;333;335;33.0;5.0;;Mon Nov 27 15:50:48 MST 2017~C:\Users\steph\Desktop\Text-File-Analyzer - Copy\docs\Test Cases\TestCase-1.txt;1;0;0;2;14.0;7.0;fsadf,fds.gfag;Mon Nov 27 15:52:40 MST 2017~
