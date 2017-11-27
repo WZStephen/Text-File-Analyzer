@@ -83,8 +83,11 @@ public class OpenFilePanel extends JPanel {
 			        if (rVal == JFileChooser.APPROVE_OPTION) 
 			        	filename.setText(fileChooser.getSelectedFile().toString());	
 			        
+			        
 			        fileaddress = filename.getText();
-			        msg2.setText(fileaddress);	        
+			        //String[] tokens = fileaddress.split("\\.(?=[^\\.]+$)");
+			        msg2.setText(fileaddress);      
+			        
 			   }  
 			   
 			   else if(e.getSource() == Analyze)  //analysis the file by address
@@ -132,33 +135,35 @@ public class OpenFilePanel extends JPanel {
 								"\nThe average number of characters per line is: " + avgchars +
 								"\nThe average of word length is: " + avgword);
 						
-						BufferedWriter writer = null;	// writes to a textfile of the details of a file analyzed
-						try 
-						{
-						    writer = new BufferedWriter( new FileWriter("analysis.txt", true));
-						    writer.write("The name of the read textfile is: " + filename.getText() + "\n"); writer.newLine();
-						    writer.write("The number of lines is: " + linecounter + "\n"); writer.newLine();
-						    writer.write( "The number of blank lines is: " + blanklines + "\n"); writer.newLine();
-						    writer.write("The number of spaces is: " + spaces + "\n"); writer.newLine();
-						    writer.write("The number of words is: " + words + "\n"); writer.newLine();
-						    writer.write("The average number of characters per line is: " + avgchars + "\n"); writer.newLine();
-						    writer.write("The average of word length is: " + avgword + "\n"); writer.newLine();
-						}
-						catch (IOException eee)
-						{}
-						finally
-						{
-						    try
-						    {
-						        if ( writer != null)
-						        writer.close( );
-						    }
-						    catch (IOException ee)
-						    {
-						    }
-						}
-
 						
+						BufferedWriter writer = null;	// writes to a textfile of the details of a file analyzed
+						//for (int i = 1; i <= 10; i++)
+						//{
+							try 
+							{
+							    writer = new BufferedWriter(new FileWriter("analysis.txt", true));	// creates analysis files per files read
+							    //writer.write(filename.getText() + "\n"); writer.newLine();	// name of textfile
+							    writer.write(linecounter + "\n"); writer.newLine();			// number of lines
+							    writer.write(blanklines + "\n"); writer.newLine();			// number of blank lines
+							    writer.write(spaces + "\n"); writer.newLine();				// number of spaces
+							    writer.write(words + "\n"); writer.newLine();				// number of words
+							    writer.write(avgchars + "\n"); writer.newLine();			// average number of chars per line
+							    writer.write(avgword + "\n"); writer.newLine();				// average word length
+							    writer.write("*" + "\n");  writer.newLine(); // * indicates the next file read does not belong to previous file read
+							}
+							catch (IOException eee)
+							{}
+							finally
+							{
+							    try
+							    {
+							        if ( writer != null)
+							        writer.close( );
+							    }
+							    catch (IOException ee)
+							    {
+							    }
+							}
 					} catch (FileNotFoundException e1) {
 						System.out.println("File not found");
 						// TODO Auto-generated catch block
